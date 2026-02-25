@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Scan – Crawl & Compare</title>
+    <style>
+        :root {
+            --bg: #0f0f14;
+            --surface: #1a1a24;
+            --border: #2a2a3a;
+            --text: #e8e8ed;
+            --muted: #8888a0;
+            --accent: #6366f1;
+            --accent-hover: #818cf8;
+            --success: #22c55e;
+            --error: #ef4444;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+            min-height: 100vh;
+            line-height: 1.5;
+        }
+        .container { max-width: 900px; margin: 0 auto; padding: 32px 24px; }
+        h1 { font-size: 1.75rem; font-weight: 600; margin-bottom: 8px; }
+        .subtitle { color: var(--muted); margin-bottom: 24px; }
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        .card h2 { font-size: 1.1rem; margin: 0 0 16px; color: var(--muted); font-weight: 500; }
+        label { display: block; margin-bottom: 6px; color: var(--muted); font-size: 0.9rem; }
+        textarea {
+            width: 100%;
+            min-height: 140px;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg);
+            color: var(--text);
+            font-family: inherit;
+            font-size: 0.95rem;
+            resize: vertical;
+        }
+        button {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-right: 12px;
+            margin-top: 8px;
+        }
+        button:hover { background: var(--accent-hover); }
+        button:disabled { opacity: 0.6; cursor: not-allowed; }
+        .secondary {
+            background: var(--border);
+            color: var(--text);
+        }
+        .secondary:hover { background: #3a3a4a; }
+        #status { margin-top: 16px; color: var(--muted); min-height: 24px; }
+        #status.error { color: var(--error); }
+        #status.success { color: var(--success); }
+        .note { font-size: 0.85rem; color: var(--muted); margin-top: 8px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Job Scan – Crawl & Compare</h1>
+        <p class="subtitle">
+            Crawl Indeed, LinkedIn, BuiltIn, and Google for engineering roles, then compare each job description
+            with a fixed resume using JobScan.co.
+        </p>
+
+        <div class="card">
+            <h2>Resume text (used for JobScan comparison)</h2>
+            <form id="scanForm" method="POST" action="/run" target="_blank">
+                <label for="resume_text">Optional: override the fixed resume in <code>config.py</code>.</label>
+                <textarea id="resume_text" name="resume_text" placeholder="Leave blank to use the fixed resume from config.py."></textarea>
+                <button type="submit" id="runBtn">Run crawl &amp; compare (opens report)</button>
+            </form>
+            <p class="note">
+                The scan will:
+                1) crawl multiple job sites and categories,
+                2) extract job descriptions (including expanding LinkedIn's "About the job" section),
+                3) open JobScan.co for each job and capture comparison results,
+                4) return an HTML report summarizing match scores, summaries, and details for human review.
+            </p>
+            <p id="status"></p>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('scanForm');
+        const runBtn = document.getElementById('runBtn');
+        const statusEl = document.getElementById('status');
+
+        form.addEventListener('submit', () => {
+            runBtn.disabled = true;
+            statusEl.textContent = 'Running crawl and JobScan comparisons… the report will open in a new tab when finished.';
+            statusEl.className = '';
+            setTimeout(() => {
+                runBtn.disabled = false;
+                statusEl.textContent = '';
+            }, 5000);
+        });
+    </script>
+</body>
+</html>
+
