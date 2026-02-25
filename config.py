@@ -15,10 +15,10 @@ RESUME_TEXT = os.environ.get(
     "JOBSCAN_RESUME_TEXT",
     """
 Jason Wiggs 
-jason.wiggs@outlook.com | 773-841-2363
+
 Chicago, IL + New York, NY + Remote
 https://www.linkedin.com/in/jason-wiggs
-Job Title From Job Description Goes Here
+Software Engineer
 Software Development | Artificial Intelligence, LLM | Salesforce | Python, Java, Apex
 Innovative and flexible Senior Software Engineer with a master’s degree in computer science and 11+ years of experience in software development, including AI chat implementations, Salesforce CRM development, REST API integrations, mainframe tools and applications, and mobile browser quality assurance, seeking a role creating secure solutions using new and emerging tech in a fast-paced, team-focused environment.
 
